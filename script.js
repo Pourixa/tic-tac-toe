@@ -18,9 +18,12 @@ const Game = (() => {
       [0, 0, 0],
       [0, 0, 0],
     ];
+    currentTurn = "X";
     terminated = false;
     displayDOM.showBoard();
     event.preventDefault();
+    document.querySelector(".results").close();
+    document.querySelector(".results").style.display = "none";
     n1 = document.querySelector(".name1").value;
     n2 = document.querySelector(".name2").value;
     if (!(n2 == "" || n1 == "")) {
@@ -64,19 +67,39 @@ const Game = (() => {
     let checkC = checkColumns();
     let checkR = checkRows();
     let checkD = checkDiagonals();
+    let results = document.querySelector(".results");
     if (checkC.res) {
-      console.log(`${checkC.winner} Won!`);
+      winner = checkC.winner == "X" ? playerX : playerO;
+      results.style.display = "flex";
+      results.children[0].textContent = `${winner}`;
+      results.children[1].textContent = "Won!";
+      results.show();
+      console.log(`${winner} Won!`);
       terminated = true;
       return true;
     } else if (checkR.res) {
-      console.log(`${checkR.winner} Won!`);
+      winner = checkR.winner == "X" ? playerX : playerO;
+      results.style.display = "flex";
+      results.children[0].textContent = `${winner}`;
+      results.children[1].textContent = "Won!";
+      results.show();
+      console.log(`${winner} Won!`);
       terminated = true;
       return true;
     } else if (checkD.res) {
-      console.log(`${checkD.winner} Won!`);
+      winner = checkD.winner == "X" ? playerX : playerO;
+      results.style.display = "flex";
+      results.children[0].textContent = `${winner}`;
+      results.children[1].textContent = "Won!";
+      results.show();
+      console.log(`${winner} Won!`);
       terminated = true;
       return true;
     } else if (checkDraw().res) {
+      results.style.display = "flex";
+      results.children[0].textContent = `DRAW!`;
+      results.children[1].textContent = "";
+      results.show();
       console.log(`DRAW!`);
       terminated = true;
       return true;
@@ -152,9 +175,15 @@ const displayDOM = (() => {
     for (let i = 0; i < cells.length; i++) {
       cells[i].addEventListener("click", (e) => Game.getInput(e));
     }
-    btn = document
+    startBtn = document
       .querySelector("button")
       .addEventListener("click", (e) => Game.startGame(e));
+    closeBtn = document
+      .querySelector(".results > button")
+      .addEventListener("click", (e) => {
+        e.target.parentElement.style.display = "none";
+        e.target.parentElement.close();
+      });
   }
   addListener();
   function getGameboard() {

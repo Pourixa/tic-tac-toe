@@ -98,3 +98,18 @@ button {
   justify-content: center;
   align-items: center;
 }
+
+.results {
+  align-self: center;
+  justify-self: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+  width: 50%;
+  height: 25%;
+}
+
+.results > button {
+  width: 8rem;
+}
